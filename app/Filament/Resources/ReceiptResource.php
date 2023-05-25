@@ -19,6 +19,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Filter as FiltersFilter;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
@@ -53,7 +54,9 @@ class ReceiptResource extends Resource
                                             ->orderBy('name')
                                             ->pluck('name', 'id')
                                             ->toArray()
-                                    ),
+                                    )
+                                    ->searchable()
+                                    ->preload(),
                                 Toggle::make('is_approved')
                                     ->label('Is Approved'),
                                 Toggle::make('is_verified')
@@ -135,6 +138,11 @@ class ReceiptResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Action::make('download')
+                    ->label('Download Pdf')
+                    ->icon('heroicon-o-download')
+                    ->url(fn (Receipt $record) => route('receipts.pdf.download', $record))
+                    ->openUrlInNewTab(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

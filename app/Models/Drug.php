@@ -25,4 +25,10 @@ class Drug extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function receiptItems()
+    {
+        return $this->hasMany(ReceiptItem::class);
+    }
+
+    
 }

@@ -13,6 +13,9 @@ class Receipt extends Model
         'user_id',
         'receipt_number',
         'receipt_date',
+        'hospital_id',
+        'is_approved',
+        'is_verified',
     ];
 
     public function user()
